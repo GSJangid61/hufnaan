@@ -10,5 +10,5 @@ module.exports = ()=> {
   mongoose.set('debug', true);
   mongoose.connect(url, options)
   .then(()=> console.log(`connected to mongodb`))
-  .catch(err => Sentry.captureException(err));
+  .catch(err => console.log(err));
 }

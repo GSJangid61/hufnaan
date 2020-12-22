@@ -8,6 +8,8 @@ const db = require('./database/db')();
 require('dotenv').config();
 var indexRouter = require('./routes/index');
 var adminRoutes = require('./routes/adminRoutes/routes');
+var apiRoutes = require('./routes/apiRoutes/routes');
+var directRoute = require('./routes/apiRoutes/directRoute');
 
 var app = express();
 
@@ -23,6 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/admin', adminRoutes);
+app.use('/api', directRoute);
+app.use('/api', apiRoutes);
 
 
 // catch 404 and forward to error handler

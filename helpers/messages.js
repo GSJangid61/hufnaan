@@ -15,10 +15,11 @@ module.exports ={
     dashboardWelcome:'Welcome to dashboard',
 
     loginSuccess: 'Logged in successfully', 	 
-    signupSuccess: 'Signed up successfully',
+    signupSuccess: 'Register  successfully',
     invalidPassword: 'Email/Password combination is incorrect',
     logoutSuccess: 'Logged out successfully',
     logoutFail: 'Unable to logout',
+    allFieldsRequired:'All fields are required',
 
     forgetPasswordMailSuccess: 'Mail sent successfully'
 }

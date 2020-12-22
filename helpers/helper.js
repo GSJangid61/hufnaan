@@ -5,12 +5,12 @@ const model = require("../lib/model");
 const AWS = require("aws-sdk");
 
 const crypto = require('crypto'); 
+const {User} = require('../model/user');
 
 const createCipheriv = crypto.createCipheriv;
 const scrypt = crypto.scrypt;
 const timingSafeEqual = crypto.timingSafeEqual;
 
-const { User } = require("../models/admin");
 
 const hashPassword = async function (password, salt) {
     return new Promise((resolve, reject) => {
@@ -33,7 +33,7 @@ const hashPassword = async function (password, salt) {
               const cipher = createCipheriv(Constants.ALGORITHM, derivedKey, iv)
               resolve(Buffer.concat([ cipher.update(Buffer.from(process.env.KEY, 'base64')), cipher.final() ]).toString('base64'))
             } catch (error) {
-              Sentry.captureException(error);
+              
               reject(error)
             }
           })
@@ -66,10 +66,26 @@ const ucFirst = function (str) {
     }).replace(/\s/g, "");
 }
 
+const getUser = async function(_id) {
+	var query = { _id: _id };
+	let user = JSON.parse(JSON.stringify(await model.findOne(User, query, {})));
+	return user;
+};
+
+async function verifyUser(email) {
+    var query = { "email": email, "status": 1};
+    var projection = 'email status _id salt password';
+  
+    let userData = await model.findOne(User, query, projection);
+    return userData;
+  }
+
 
 module.exports = {
 	hashPassword,
     verifyPassword,
     capitalize,
     ucFirst,
+    getUser,
+    verifyUser
 };
